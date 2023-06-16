@@ -13,7 +13,8 @@ struct Student {
     int score3;
     int totalScore;
 };
-
+            //внизу пример входных данных
+            
 bool compare(const Student& lhs, const Student& rhs) {
     if (lhs.totalScore != rhs.totalScore) {
         return lhs.totalScore > rhs.totalScore;
@@ -51,3 +52,10 @@ int main() {
     writeDataToFile("output.txt", students);
     return 0;
 }
+
+//aescheryakov victor 70 70 70 
+//mescheryakov victor 70 70 70 
+//kreys victor 10 10 10 
+//kreys stas 100 84 100
+//davydov max 0 0 0
+//davydov max 15 76 94
