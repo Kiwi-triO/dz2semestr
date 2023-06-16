@@ -1,0 +1,53 @@
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+struct Student {
+    string firstName;
+    string lastName;
+    int score1;
+    int score2;
+    int score3;
+    int totalScore;
+};
+
+bool compare(const Student& lhs, const Student& rhs) {
+    if (lhs.totalScore != rhs.totalScore) {
+        return lhs.totalScore > rhs.totalScore;
+    }
+    else if (lhs.lastName != rhs.lastName) {
+        return lhs.lastName < rhs.lastName;
+    }
+    return false;
+}
+
+vector<Student> readDataFromFile(string fileName) {
+    vector<Student> students;
+    ifstream fin(fileName);
+    while (!fin.eof()) {
+        Student student;
+        fin >> student.lastName >> student.firstName >> student.score1 >> student.score2 >> student.score3;
+        student.totalScore = student.score1 + student.score2 + student.score3;
+        students.push_back(student);
+    }
+    fin.close();
+    return students;
+}
+
+void writeDataToFile(string fileName, const vector<Student>& students) {
+    ofstream fout(fileName);
+    for (const auto& student : students) {
+        fout << student.lastName << " " << student.firstName << " " << student.score1 << " " << student.score2 << " " << student.score3 << endl;
+    }
+    fout.close();
+}
+
+int main() {
+    vector<Student> students = readDataFromFile("input.txt");
+    stable_sort(students.begin(), students.end(), compare);
+    writeDataToFile("output.txt", students);
+    return 0;
+}
