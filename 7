@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    unordered_map<char, int> frequency;
+    string line;
+    while (getline(cin, line)) {
+        string word;
+        for (char c : line) {
+            if (isalpha(c)) {
+                word += tolower(c);
+            }
+            else if (!word.empty()) {
+                frequency[word[0]]++;
+                word.clear();
+            }
+        }
+        if (!word.empty()) {
+            frequency[word[0]]++;
+        }
+        if (line == "0") break;
+    }
+    char max_char = ' ';
+    int max_frequency = 0;
+    for (auto& p : frequency) {
+        if (p.second > max_frequency) {
+            max_frequency = p.second;
+            max_char = p.first;
+        }
+    }
+    cout << max_char << endl;
+    return 0;
+}
