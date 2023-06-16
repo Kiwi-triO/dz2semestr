@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<string> split(const string& s) {
+    vector<string> tokens;
+    string token;
+    for (char c : s) {
+        if (c == ' ') {
+            if (!token.empty()) {
+                tokens.push_back(token);
+                token.clear();
+            }
+        }
+        else {
+            token += tolower(c);
+        }
+    }
+    if (!token.empty()) {
+        tokens.push_back(token);
+    }
+    return tokens;
+}
+
+int main() {
+    string s1, s2;
+    getline(cin, s1);
+    getline(cin, s2);
+    vector<string> words1 = split(s1);
+    vector<string> words2 = split(s2);
+    vector<string> common_words;
+    vector<string> unique_words;
+    sort(words1.begin(), words1.end());
+    sort(words2.begin(), words2.end());
+    set_intersection(words1.begin(), words1.end(), words2.begin(), words2.end(),
+        back_inserter(common_words));
+    set_symmetric_difference(words1.begin(), words1.end(), words2.begin(), words2.end(),
+        back_inserter(unique_words));
+    cout << "Common words: ";
+    for (const string& word : common_words) {
+        cout << word << " ";
+    }
+    cout << endl << "Unique words: ";
+    for (const string& word : unique_words) {
+        cout << word << " ";
+    }
+    cout << endl;
+    return 0;
+}
